@@ -1,2 +1,2 @@
 # kelime_tahmini
-Kelime Tahmini Oyunu
+Kelime Tahmini Oyunu henüz geliştirme aşamasında
