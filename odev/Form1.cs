@@ -17,6 +17,7 @@ namespace odev
         int boyut = 0;
         string[] alfabe = new string[80000];
         Form2 f2 = new Form2();
+        Form3 f3 = new Form3();
         public Form1()
         {
             InitializeComponent();
@@ -36,7 +37,6 @@ namespace odev
             f2.alfabe = alfabe;
             f2.d_boyut = boyut;
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             if (radioButton1.Checked == true)
@@ -81,7 +81,7 @@ namespace odev
                 //random kelime alma işlemi
                 Random rastgele = new Random();
                 int a = boyut - 1;
-                int rastgele_sayi = rastgele.Next(a);//0 ile 50 arasındaki sayıları üretir
+                int rastgele_sayi = rastgele.Next(a);//0 ile a arasındaki sayıları üretir
                 f2.rastgele_kelime = f2.alfabe[rastgele_sayi];
                 MessageBox.Show("Rastgele gelen kelime: " + f2.rastgele_kelime, "Seçilen Kelime", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 f2.Show();
@@ -100,6 +100,11 @@ namespace odev
         private void timer1_Tick(object sender, EventArgs e)
         {
             this.Text = this.Text.Substring(1) + this.Text.Substring(0, 1);
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
