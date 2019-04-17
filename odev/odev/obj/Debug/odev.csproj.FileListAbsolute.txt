@@ -1,0 +1,13 @@
+C:\Users\erdasonur\source\repos\odev\odev\bin\Debug\odev.exe.config
+C:\Users\erdasonur\source\repos\odev\odev\bin\Debug\odev.exe
+C:\Users\erdasonur\source\repos\odev\odev\bin\Debug\odev.pdb
+C:\Users\erdasonur\source\repos\odev\odev\obj\Debug\odev.Form1.resources
+C:\Users\erdasonur\source\repos\odev\odev\obj\Debug\odev.Form2.resources
+C:\Users\erdasonur\source\repos\odev\odev\obj\Debug\odev.Properties.Resources.resources
+C:\Users\erdasonur\source\repos\odev\odev\obj\Debug\odev.csproj.GenerateResource.cache
+C:\Users\erdasonur\source\repos\odev\odev\obj\Debug\odev.csproj.CoreCompileInputs.cache
+C:\Users\erdasonur\source\repos\odev\odev\obj\Debug\odev.exe
+C:\Users\erdasonur\source\repos\odev\odev\obj\Debug\odev.pdb
+C:\Users\erdasonur\source\repos\odev\odev\obj\Debug\odev.csprojAssemblyReference.cache
+C:\Users\erdasonur\source\repos\odev\odev\obj\Debug\odev.Form3.resources
+C:\Users\erdasonur\source\repos\odev\odev\obj\Debug\odev.Form4.resources
