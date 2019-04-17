@@ -71,6 +71,8 @@ namespace odev
             }
             letter_checking(array);
         }
+        string[] anagrams = new string[10];
+        int o = 0;
         private void letter_checking(string[] array)
         {
             char[] olanharfler = new char[29];
@@ -154,8 +156,34 @@ namespace odev
 
                 if (nh == normal_toplam && kc == kartezyen_toplam)
                 {
-                    temp[eleman] = value;
-                    eleman++;
+                    if (rastgele_kelime.Length == value.Length && rastgele_kelime!=value)
+                    {
+                        int i;
+                        for (i = 0; i < value.Length; i++)
+                        {
+                            char aranan = rastgele_kelime.ToCharArray()[i];
+                            if (value.IndexOf(aranan,0)==-1)
+                            {
+                                break;
+                            }
+                        }
+                        if (value.Length != i)
+                        {
+                            temp[eleman] = value;
+                            eleman++;
+                        }
+                        else
+                        {
+                            anagrams[o] = value;
+                            o++;
+                        }
+                        
+                    }
+                    else
+                    {
+                        temp[eleman] = value;
+                        eleman++;
+                    }
                 }
 
                 normal_toplam = 0;
@@ -176,6 +204,8 @@ namespace odev
                 MessageBox.Show("Yeni Kartezyen Çarpım ve Normal Hesaplama Değerlerini Giriniz", "Bilgi Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 textBox1.Text = "";
                 textBox2.Text = "";
+                Array.Clear(anagrams, 0, anagrams.Length);
+                o = 0;
             }
             else
             {
@@ -222,6 +252,16 @@ namespace odev
                 else
                 {
                     MessageBox.Show("Tuttuğunuz Kelime : " + alfabe[0], "Kelime Bulundu!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    for (int i = 0; i < anagrams.Length; i++)
+                    {
+                        if (string.IsNullOrEmpty(anagrams[i])){
+                            break;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Olası anagramlar= " + anagrams[i]);
+                        }
+                    }
                     if (MessageBox.Show("Ana menüye dönmek için Tamamı çıkmak içinse İptali seçiniz", "Oyun sonu", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.OK)
                     {
                         Form3 f3 = new Form3();
