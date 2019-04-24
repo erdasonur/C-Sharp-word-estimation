@@ -28,53 +28,61 @@ namespace odev
             string yazi = sw.ReadLine();
             while (yazi != null)
             {
-                alfabe[boyut] = yazi;
+                alfabe[boyut] = yazi.ToLower();
                 yazi = sw.ReadLine();
                 boyut++;
             }
             sw.Close();
             fs.Close();
-            f2.alfabe = alfabe;
-            f2.d_boyut = boyut;
+            f2.Alfabe = alfabe;
+            f2.D_boyut = boyut;
         }
         private void button1_Click(object sender, EventArgs e)
         {
             if (radioButton1.Checked == true)
             {
                 //girilen değer türkçe kelime mi diye kontrol et (sözlükte varlığının kontrolü)
-                f2.rastgele_kelime = Interaction.InputBox("Girilecek kelime:", "Kelime Belirleme", "", 400, 300);
-                int kelime_tespiti = 0,i;
-                for (i = 0; i < boyut; i++)
+                f2.Rastgele_kelime = Interaction.InputBox("Girilecek kelime:", "Kelime Belirleme", "", 400, 300);
+                if (f2.Rastgele_kelime.IndexOf(" ",0)==-1)
                 {
-                    if(String.Compare(alfabe[i], f2.rastgele_kelime) == 0)
+                    int kelime_tespiti = 0, i;
+                    for (i = 0; i < boyut; i++)
                     {
-                        //kelime sözlükte var
-                        kelime_tespiti = 1;
-                        break;//döngüyü bitir kelime bulundu
+                        if (String.Compare(alfabe[i], f2.Rastgele_kelime) == 0)
+                        {
+                            //kelime sözlükte var
+                            kelime_tespiti = 1;
+                            break;//döngüyü bitir kelime bulundu
+                        }
                     }
+                    if (kelime_tespiti == 0)//mesaj ile diziyi karşılaştır kelime dizi de yoksa eklemek ister misin diye sorma işlemi..
+                    {
+                        MessageBox.Show("Bu kelime sözlükte yer almıyor.. Türkçe değil ya da eklenmemiş.", "Sözlük Kontrolü", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        if (MessageBox.Show(f2.Rastgele_kelime + "kelimesini sözlüğe eklememi ister misin ? E/H", "Sözlüğe Kelime Ekleme", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            //dosyaya yazma işlemi
+                            string dosya_yolu = @"C:\Users\erdasonur\source\repos\odev\sozluk.txt";
+                            FileStream fs = new FileStream(dosya_yolu, FileMode.OpenOrCreate, FileAccess.Write);
+                            StreamWriter sw = new StreamWriter(fs);
+                            sw.WriteLine(f2.Rastgele_kelime);
+                            sw.Flush();
+                            sw.Close();
+                            fs.Close();
+                            alfabe[boyut++] = f2.Rastgele_kelime;//diziye de yazıldı
+                            MessageBox.Show("Seçiminiz üzerine kelime sözlüğe eklendi..", "Bilgi Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else MessageBox.Show("Seçiminiz üzerine kelime sözlüğe eklenmedi..", "Bilgi Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    //Form2'ye dizinin boyutu (kaç kelime olduğu) gidiyor..
+                    f2.Show();
+                    this.Hide();
                 }
-                if (kelime_tespiti == 0)//mesaj ile diziyi karşılaştır kelime dizi de yoksa eklemek ister misin diye sorma işlemi..
+                else
                 {
-                    MessageBox.Show("Bu kelime sözlükte yer almıyor.. Türkçe değil ya da eklenmemiş.","Sözlük Kontrolü",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-                    
-                    if (MessageBox.Show(f2.rastgele_kelime + "kelimesini sözlüğe eklememi ister misin ? E/H", "Sözlüğe Kelime Ekleme", MessageBoxButtons.YesNo, MessageBoxIcon.Question)==DialogResult.Yes)
-                    {
-                        //dosyaya yazma işlemi
-                        string dosya_yolu = @"C:\Users\erdasonur\source\repos\odev\sozluk.txt";
-                        FileStream fs = new FileStream(dosya_yolu, FileMode.OpenOrCreate, FileAccess.Write);
-                        StreamWriter sw = new StreamWriter(fs);
-                        sw.WriteLine(f2.rastgele_kelime);
-                        sw.Flush();
-                        sw.Close();
-                        fs.Close();
-                        alfabe[boyut++] = f2.rastgele_kelime;//diziye de yazıldı
-                        MessageBox.Show("Seçiminiz üzerine kelime sözlüğe eklendi..","Bilgi Ekranı",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                    }
-                    else MessageBox.Show("Seçiminiz üzerine kelime sözlüğe eklenmedi..","Bilgi Ekranı",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                    MessageBox.Show("Boşluk bırakmayınız!! Tekrar seçim yapınız", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                //Form2'ye dizinin boyutu (kaç kelime olduğu) gidiyor..
-                f2.Show();
-                this.Hide();
+
             }
             else
             {
@@ -82,8 +90,8 @@ namespace odev
                 Random rastgele = new Random();
                 int a = boyut - 1;
                 int rastgele_sayi = rastgele.Next(a);//0 ile a arasındaki sayıları üretir
-                f2.rastgele_kelime = f2.alfabe[rastgele_sayi];
-                MessageBox.Show("Rastgele gelen kelime: " + f2.rastgele_kelime, "Seçilen Kelime", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                f2.Rastgele_kelime = f2.Alfabe[rastgele_sayi];
+                MessageBox.Show("Rastgele gelen kelime: " + f2.Rastgele_kelime, "Seçilen Kelime", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 f2.Show();
                 this.Hide();
             }

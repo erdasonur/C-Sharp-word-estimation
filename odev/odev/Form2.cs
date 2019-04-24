@@ -14,9 +14,9 @@ namespace odev
 {
     public partial class Form2 : Form
     {
-        public string[] alfabe { get; set; }
-        public string rastgele_kelime { get; set; }
-        public int d_boyut { get; set; }
+        public string[] Alfabe { get; set; }
+        public string Rastgele_kelime { get; set; }
+        public int D_boyut { get; set; }
         public Form2()
         {
             InitializeComponent();
@@ -25,15 +25,14 @@ namespace odev
         private void Form2_Load_1(object sender, EventArgs e)
         {
             this.DesktopLocation = new Point(450, 150);
-            label3.Text = "Rastgele Kelime:   "+ rastgele_kelime;
-            pictureBox1.Image = ımageList1.Images[0];
+            label3.Text = "Rastgele Kelime:   "+ Rastgele_kelime;
             for (int i = 0; i < harfler.Length; i++)
             {
                 listBox1.Items.Add(harfler[i]);
             }
-            label4.Text = "Sözlükte kalan kelime sayısı: " + d_boyut.ToString();
+            label4.Text = "Sözlükte kalan kelime sayısı: " + D_boyut.ToString();
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             int kartezyen_carpim = 3, normal_hesaplama = 3;
             if (string.IsNullOrEmpty(textBox1.Text) || string.IsNullOrEmpty(textBox2.Text))
@@ -52,7 +51,7 @@ namespace odev
                 {
                     normal_hesaplama = int.Parse(textBox1.Text);
                     kartezyen_carpim = int.Parse(textBox2.Text);
-                    loop_function(normal_hesaplama, kartezyen_carpim);
+                    Loop_function(normal_hesaplama, kartezyen_carpim);
                 }
             }
 
@@ -62,84 +61,83 @@ namespace odev
         {
             Application.Exit();
         }
-        private void function(string[] array, int dimension)
+        private void Function(string[] array, int dimension)
         {
-            Array.Clear(alfabe, 0, dimension);
+            Array.Clear(Alfabe, 0, dimension);
             for (int i = 0; i < array.Length; i++)
             {
-                alfabe[i] = array[i];
+                Alfabe[i] = array[i];
             }
-            letter_checking(array);
+            Letter_checking(array);
         }
         string[] anagrams = new string[10];
-        int o = 0;
-        private void letter_checking(string[] array)
+        int anagram_counter = 0;
+        private void Letter_checking(string[] array)
         {
             char[] olanharfler = new char[29];
-            int k = 0;
+            int olanharfler_counter = 0;
             for (int i = 0; i < harfler.Length; i++)
             {
                 char aranan = harfler[i];
-                foreach (string word in alfabe)
+                foreach (string word in Alfabe)
                 {
                     if (string.IsNullOrEmpty(word))
                     {
                         break;
                     }
-                    else if (word.IndexOf(aranan, 0) != -1)
+                    else if (word.IndexOf(aranan, 0) != -1)//sözlükte olan harfleri olan harfler dizine atma işlemi
                     {
-                            olanharfler[k] = aranan;
-                            k++;
+                            olanharfler[olanharfler_counter] = aranan;
+                            olanharfler_counter++;
                             break;
                     }
                 }
             }
-            int bayrak_biti = 0,l=0;
+            int bayrak_biti = 0,olmayanharfler_counter=0;
             char[] olmayan_harfler = new char[29];
             for (int i = 0; i < harfler.Length; i++)
             {
                 for (int j = 0; j < olanharfler.Length; j++)
                 {
-                    if (harfler[i] == olanharfler[j])
-                    {
-                        bayrak_biti = 1;
+                    if (harfler[i] == olanharfler[j])//olan harf varsa bayrak biti 1 olur 
+                    {                                //bayrak biti 1 ise sözlükte olan harf
+                        bayrak_biti = 1;             //bayrak biti 0 ise olmayan olur 
                         break;
                     }
                 }
-                if (bayrak_biti == 0)
+                if (bayrak_biti == 0)//burada bayrak biti 0 ise olmayan harfler dizine harfleri atıyoruz
                 {
-                    olmayan_harfler[l] = harfler[i];
-                    l++;
+                    olmayan_harfler[olmayanharfler_counter] = harfler[i];
+                    olmayanharfler_counter++;
                 }
                 bayrak_biti = 0;
             }
-            Array.Clear(harfler, 0, harfler.Length);
+            Array.Clear(harfler, 0, harfler.Length);//Diziyi boşaltma işlemi
             for (int i = 0; i < olanharfler.Length; i++)
             {
-                harfler[i] = olanharfler[i];
-                Console.Write(olanharfler[i].ToString());
+                harfler[i] = olanharfler[i];//olan harfleri harfler dizine atıyoruz
             }
             listBox1.Items.Clear();
-            for (int i = 0; i < harfler.Length; i++)
+            for (int i = 0; i < harfler.Length; i++)//canlı olarak olan harfleri görmek için listboxa ekliyoruz
             {
                 listBox1.Items.Add(harfler[i]);
             }
-            for (int i = 0; i < olmayan_harfler.Length; i++)
+            for (int i = 0; i < olmayan_harfler.Length; i++)//canlı olarak olmayan harfleri görmek için listbox2ye ekliyoruz
             {
                 listBox2.Items.Add(olmayan_harfler[i]);
             }
         }
-        private void loop_function(int nh, int kc)
+        private void Loop_function(int nh, int kc)
         {
             int normal_toplam = 0, kartezyen_toplam = 0,eleman=0;
-            string[] temp = new string[d_boyut];
-            foreach (string value in alfabe)
+            string[] temp = new string[D_boyut];
+            foreach (string value in Alfabe)
             {
                 if (string.IsNullOrEmpty(value))
                 {
                     break;
                 }
-                for (int i = 0; i < rastgele_kelime.Length; i++)
+                /*for (int i = 0; i < rastgele_kelime.Length; i++)//string karşılaştırma 1.yol
                 {
                     char aranan = rastgele_kelime.ToCharArray()[i];
                     int[] adetler = Enumerable.Range(0, value.Length).Select(x => value.Substring(x, 1).Count(p => p == aranan)).ToArray();
@@ -152,16 +150,30 @@ namespace odev
                         kartezyen_toplam += adetler[j];
                     }
                     Array.Clear(adetler, 0, adetler.Length);
+                }*/
+                for (int i = 0; i < Rastgele_kelime.Length; i++)//string karşılaştırma 2.yol
+                {
+                    for (int j = 0; j < value.Length; j++)
+                    {
+                        if (Rastgele_kelime.ToCharArray()[i] == value.ToCharArray()[j])
+                        {
+                            if (Rastgele_kelime.IndexOf(Rastgele_kelime.ToCharArray()[i], 0, i) == -1)
+                            {
+                                normal_toplam++;
+                            }
+                            kartezyen_toplam++;
+                        }
+                    }
                 }
 
-                if (nh == normal_toplam && kc == kartezyen_toplam)
+                if (nh == normal_toplam && kc == kartezyen_toplam)//anagram kelime kontrolü
                 {
-                    if (rastgele_kelime.Length == value.Length && rastgele_kelime!=value)
+                    if (Rastgele_kelime.Length == value.Length && Rastgele_kelime!=value)
                     {
                         int i;
                         for (i = 0; i < value.Length; i++)
                         {
-                            char aranan = rastgele_kelime.ToCharArray()[i];
+                            char aranan = Rastgele_kelime.ToCharArray()[i];
                             if (value.IndexOf(aranan,0)==-1)
                             {
                                 break;
@@ -174,8 +186,8 @@ namespace odev
                         }
                         else
                         {
-                            anagrams[o] = value;
-                            o++;
+                            anagrams[anagram_counter] = value;
+                            anagram_counter++;
                         }
                         
                     }
@@ -189,27 +201,35 @@ namespace odev
                 normal_toplam = 0;
                 kartezyen_toplam = 0;
             }
-            function(temp, eleman);//kalan elemanları sözlük dizine atıyor..
-            Array.Clear(temp, 0, d_boyut);
-            if (alfabe[1] != null && alfabe[2] != null)
+            Function(temp, eleman);//kalan elemanları sözlük dizine atıyor..
+            Array.Clear(temp, 0, D_boyut);
+            if (Alfabe[1] != null)
             {
-                listBox3.Items.Add(rastgele_kelime);
-                rastgele_kelime = "";
-                Random rastgele = new Random();
-                Console.WriteLine(eleman.ToString());
-                int rastgele_sayi = rastgele.Next(eleman);//0 ile sözlük boyutu arasındaki sayıları üretir
-                label4.Text="Sözlükte kalan kelime sayısı: " + eleman.ToString();
-                rastgele_kelime = alfabe[rastgele_sayi];
-                label3.Text = "Rastgele kelime:" + rastgele_kelime;
+                listBox3.Items.Add(Rastgele_kelime);
+                listBox4.Items.Add(nh.ToString() + "  --  " + kc.ToString());
+                int bayrak = 0;
+                do
+                {
+                    bayrak = 0;
+                    Random_word(eleman);
+                    for (int i = 0; i < listBox3.Items.Count; i++)
+                    {
+                        if (Rastgele_kelime == listBox3.Items[i].ToString())
+                        {
+                            bayrak = 1;
+                        }
+                    }
+                } while (bayrak == 1);//Burada üst üste aynı kelime gelmesi engelleniyor.
+                label3.Text = "Rastgele kelime:" + Rastgele_kelime;
                 MessageBox.Show("Yeni Kartezyen Çarpım ve Normal Hesaplama Değerlerini Giriniz", "Bilgi Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 textBox1.Text = "";
                 textBox2.Text = "";
                 Array.Clear(anagrams, 0, anagrams.Length);
-                o = 0;
+                anagram_counter = 0;
             }
             else
             {
-                if (alfabe[0] == null)
+                if (Alfabe[0] == null)
                 {
                     if (MessageBox.Show("Girdiğiniz kelime sözlükte bulunamadı..\nKelimeyi sözlüğe eklememi ister misiniz?", "Bilgi Ekranı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
@@ -222,7 +242,7 @@ namespace odev
                         sw.Close();
                         fs.Close();
                         MessageBox.Show("Seçiminiz üzerine kelime sözlüğe eklendi..", "Bilgi Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        if (MessageBox.Show("Ana menüye dönmek için Tamamı çıkmak içinse İptali seçiniz", "Oyun sonu", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.OK)
+                        if (MessageBox.Show("Ana menüye dönmek için Tamamı ,kalip incelemek için İptali , çıkmak içinse çarpı tuşun seçiniz", "Oyun sonu", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.OK)
                         {
                             Form3 f3 = new Form3();
                             f3.Show();
@@ -230,13 +250,19 @@ namespace odev
                         }
                         else
                         {
-                            Application.Exit();
+                            textBox1.Visible = false;
+                            textBox2.Visible = false;
+                            label1.Visible = false;
+                            label2.Visible = false;
+                            button1.Visible = false;
+                            listBox3.Items.Add(Rastgele_kelime);
+                            listBox4.Items.Add(nh.ToString() + "-" + kc.ToString());
                         }
                     }
                     else
                     {
                         MessageBox.Show("Seçiminiz üzere kelime sözlüğe eklenmedi", "Bilgi Ekranı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        if (MessageBox.Show("Ana menüye dönmek için Tamamı çıkmak içinse İptali seçiniz", "Oyun sonu", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.OK)
+                        if (MessageBox.Show("Ana menüye dönmek için Tamamı ,kalıp incelemek için İptali , çıkmak içinse çarpı tuşun seçiniz", "Oyun sonu", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.OK)
                         {
                             Form3 f3 = new Form3();
                             f3.Show();
@@ -244,14 +270,20 @@ namespace odev
                         }
                         else
                         {
-                            Application.Exit();
+                            textBox1.Visible = false;
+                            textBox2.Visible = false;
+                            label1.Visible = false;
+                            label2.Visible = false;
+                            button1.Visible = false;
+                            listBox3.Items.Add(Rastgele_kelime);
+                            listBox4.Items.Add(nh.ToString() + "-" + kc.ToString());
                         }
                     }
 
                 }
                 else
                 {
-                    MessageBox.Show("Tuttuğunuz Kelime : " + alfabe[0], "Kelime Bulundu!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Tuttuğunuz Kelime : " + Alfabe[0], "Kelime Bulundu!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     for (int i = 0; i < anagrams.Length; i++)
                     {
                         if (string.IsNullOrEmpty(anagrams[i])){
@@ -259,10 +291,10 @@ namespace odev
                         }
                         else
                         {
-                            MessageBox.Show("Olası anagramlar= " + anagrams[i]);
+                            MessageBox.Show("Bulunan kelimenin olası "+(i+1) +". anagramı= " + anagrams[i],"Bilgi Ekranı",MessageBoxButtons.OK,MessageBoxIcon.Asterisk);
                         }
                     }
-                    if (MessageBox.Show("Ana menüye dönmek için Tamamı çıkmak içinse İptali seçiniz", "Oyun sonu", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.OK)
+                    if (MessageBox.Show("Ana menüye dönmek için Tamamı ,kalıp incelemek için İptali , çıkmak içinse çarpı tuşun seçiniz", "Oyun sonu", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk) == DialogResult.OK)
                     {
                         Form3 f3 = new Form3();
                         f3.Show();
@@ -270,11 +302,26 @@ namespace odev
                     }
                     else
                     {
-                        Application.Exit();
+                        textBox1.Visible = false;
+                        textBox2.Visible = false;
+                        label1.Visible = false;
+                        label2.Visible = false;
+                        button1.Visible = false;
+                        listBox3.Items.Add(Rastgele_kelime);
+                        listBox4.Items.Add(nh.ToString() + " - " + kc.ToString());
+                        label4.Text = "Kalan kelime sayısı:  " + eleman;
                     }
                 }
             }
             eleman = 0;
+        }
+        public void Random_word(int elemann)
+        {
+            Rastgele_kelime = "";
+            Random rastgele = new Random();
+            int rastgele_sayi = rastgele.Next(elemann);//0 ile sözlük boyutu arasındaki sayıları üretir
+            label4.Text = "Sözlükte kalan kelime sayısı: " + elemann.ToString();
+            Rastgele_kelime = Alfabe[rastgele_sayi];
         }
     }
 }

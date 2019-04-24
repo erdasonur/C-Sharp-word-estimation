@@ -28,7 +28,7 @@ namespace odev
             string yazi = sw.ReadLine();
             while (yazi != null)
             {
-                alfabe[boyut] = yazi;
+                alfabe[boyut] = yazi.ToLower();
                 yazi = sw.ReadLine();
                 boyut++;
             }
